@@ -38,6 +38,14 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
+  def same_director
+    @movies_found = Movie.find_same_director(params[:id])
+    if @movies_found.nil?
+      redirect_to movies_path
+      flash[:notice] = "'#{Movie.find_by(id: params[:id]).title}' has no director info"
+    end
+  end
+  
   private
   # Making "internal" methods private is not required, but is a common practice.
   # This helps make clear which methods respond to requests, and which ones do not.
